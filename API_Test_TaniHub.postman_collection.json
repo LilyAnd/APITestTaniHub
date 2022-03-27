@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "0523de3e-1dd1-496b-b653-31421a29935a",
+		"name": "API_Test_TaniHub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Script",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"",
+							"//check the response is valid and has a body",
+							"pm.test(\"Response valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.withBody;",
+							"});",
+							"",
+							"//check parameters on the body",
+							"pm.test(\"Body contain paramenters\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\")",
+							"    pm.expect(pm.response.text()).to.include(\"name\")",
+							"    pm.expect(pm.response.text()).to.include(\"description\")",
+							"    pm.expect(pm.response.text()).to.include(\"vehicle_class\")",
+							"    pm.expect(pm.response.text()).to.include(\"length\")",
+							"    pm.expect(pm.response.text()).to.include(\"pilot\")",
+							"    pm.expect(pm.response.text()).to.include(\"films\")",
+							"    pm.expect(pm.response.text()).to.include(\"url\")",
+							"});",
+							"",
+							"//check for particular values in the response body",
+							"pm.test(\"The vehicle is Air Destroyer Goliath\", () => {",
+							"    pm.expect(responseJson[0].id).to.eql(\"4e09b023-f650-4747-9ab9-eacf14540cfb\");",
+							"    pm.expect(responseJson[0].name).to.eql(\"Air Destroyer Goliath\");",
+							"});",
+							"",
+							"//check status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//check that a response header is present",
+							"pm.test(\"Content-Type header is present\", () => {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"//check the type of some part of the response",
+							"pm.test(\"Test data type of the response\", () => {",
+							"    pm.expect(responseJson).to.be.an(\"array\");",
+							"    pm.expect(responseJson.length).to.be.a(\"number\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ghibliapi.herokuapp.com/vehicles/",
+					"protocol": "https",
+					"host": [
+						"ghibliapi",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"vehicles",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
